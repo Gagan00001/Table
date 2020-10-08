@@ -4,6 +4,8 @@ var mongoose = require("mongoose");
 var db = require("./schema");
 var cors = require("cors");
 var bodyParser = require("body-parser");
+const { start } = require("repl");
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
@@ -13,17 +15,37 @@ mongoose.connect("mongodb://localhost:27017/Table", {
 });
 app.use(cors());
 
+app.get("/fetch", async (req, res) => {
+  // var size = {};
+  startRow = req.query.startRow;
+  endRow = req.query.endRow;
+  console.log(">>>", startRow);
+  console.log(">>>>", endRow);
 
-app.get("/fetch", (req, res) => {
-  db.find({ }, function (err, result) {
-      res.send(result);
-    } 
-  );
+  // db.find({})
+  //   .then((allData) =>
+  //     db.find({}, null, { limit: Number(endRow), skip: Number(startRow) })
+  //   )
+  //   .then((result) => {
+  //     console.log(result);
+  //   })
+  //   .catch(() => {});
+
+  try {
+    const count = await db.find({}).count();
+    console.log("count", count);
+    const result = await db.find({}, null, {
+      limit: Number(endRow),
+      skip: Number(startRow),
+    });
+    console.log("result", result);
+    res.send({count,result});
+  } catch (error) {}
 });
 
 app.get("/search", (req, res) => {
   var name = req.body.name;
-  db.find({ }, function (err, result) {
+  db.find({}, function (err, result) {
     if (result[0] > 0) {
       res.send({
         Name: result[0].Name,

@@ -8,7 +8,7 @@ import Screen from "./Screen/Table";
 
 ReactDOM.render(
   <>
-    <Screen/>
+    <App />
   </>,
   document.getElementById("root")
 );

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { useState, useMemo, useEffect } from "react";
-import Table from "./../../Component/Table"
+import { useState, useMemo, useCallback } from "react";
+import TableComponent from "./../../Component/Table";
 import axios from "axios";
 
 const Styles = styled.div`
@@ -32,8 +32,8 @@ const Styles = styled.div`
     }
   }
 `;
-const Screen = () => {
-  const [data, setData] = useState([]);
+
+const Table = () => {
   const columns = useMemo(
     () => [
       {
@@ -73,27 +73,64 @@ const Screen = () => {
     ],
     []
   );
-  const Response = (e) => {
-    axios
-      .get("http://localhost:8081/fetch", {})
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  };
-  useEffect(() => {
-    Response();
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
+  const fetchIdRef = useRef(0);
+  // const Response = (startRow, endRow) => {
+  //   axios
+  //     .get("http://localhost:8081/fetch", {})
+  //     .then((res) => {
+  //       setData(res.data.slice(startRow, endRow));
+  //     })
+  //     .catch((err) => {
+  //       console.log("error", err);
+  //     });
+  // };
+
+  const fetchData = useCallback(({ pageSize, pageIndex }) => {
+    const fetchId = ++fetchIdRef.current;
+    setLoading(true);
+    setTimeout(() => {
+      if (fetchId === fetchIdRef.current) {
+        console.log(">>>>>>>>>", { pageSize });
+        console.log(pageIndex);
+        const startRow = pageSize * pageIndex;
+        const endRow = startRow + pageSize;
+        console.log(startRow);
+        console.log(endRow);
+        axios
+          .get("http://localhost:8081/fetch", { params: { startRow, endRow } })
+          .then((res) => {
+            // console.log(">>>>", res.data);
+            setData(res.data.result);
+            // console.log(res.data.slice(startRow, endRow));
+            setPageCount(Math.ceil(res.data.count / pageSize));
+          })
+          .catch((err) => {
+            console.log("error", err);
+          });
+
+        // setPageCount(Math.ceil())
+        setLoading(false);
+      }
+    }, 1000);
   }, []);
 
-  console.log(">>>", data);
-
   return (
-    <Styles>
-      <Table columns={columns} data={data} />
-    </Styles>
+    <>
+      <Styles>
+        <TableComponent
+          columns={columns}
+          data={data}
+          fetchData={fetchData}
+          loading={loading}
+          pageCount={pageCount}
+        />
+      </Styles>
+    </>
   );
 };
 
-export default Screen;
+export default Table;
