@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { useTable, usePagination } from "react-table";
+import { useTable, usePagination, useSortBy } from "react-table";
 
 const TableComponent = ({
+  classname,
   columns,
   data,
   fetchData,
@@ -29,17 +30,12 @@ const TableComponent = ({
       data,
       initialState: { pageIndex: 0 },
       manualPagination: true,
+      autoResetPage: false,
       pageCount: controlledPageCount,
     },
+    useSortBy,
     usePagination
   );
-
-  // console.log(">", { getTableProps });
-  // console.log(">>", { getTableBodyProps });
-  // console.log(">>>", { headerGroups });
-  // console.log(">>>>", { rows });
-  // console.log(">>>>>", { prepareRow });
-  // const firstPageRows=rows.slice(0,10);
   useEffect(() => fetchData({ pageIndex, pageSize }), [
     fetchData,
     pageIndex,
@@ -53,7 +49,19 @@ const TableComponent = ({
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th
+                  className={classname}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
+                  {column.render("Header")}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? " 🔽"
+                        : " 🔼"
+                      : ""}
+                  </span>
+                </th>
               ))}
             </tr>
           ))}
@@ -91,9 +99,10 @@ const TableComponent = ({
           <strong>
             {pageIndex + 1} of{pageOptions.length}
           </strong>
+          <span> | </span>
         </span>
         <span>
-          | Move to Page
+          <strong>Move to Page</strong>
           <input
             type="number"
             min="1"

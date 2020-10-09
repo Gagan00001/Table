@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useState, useMemo, useCallback } from "react";
 import TableComponent from "./../../Component/Table";
 import axios from "axios";
+import "../../Component/Table/table.scss"
 
 const Styles = styled.div`
   padding: 1rem;
@@ -122,6 +123,7 @@ const Table = () => {
     <>
       <Styles>
         <TableComponent
+          classname="header"
           columns={columns}
           data={data}
           fetchData={fetchData}

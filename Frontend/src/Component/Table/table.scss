@@ -1,0 +1,59 @@
+table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: white;
+  color: grey;
+}
+.header {
+  text-align: left;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2ec;
+}
+.pagination {
+  text-align: center;
+  button {
+    border: none;
+    border-radius: 50%;
+    color: black;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+  }
+  span {
+    strong {
+      font-weight: bold;
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    }
+  }
+  span {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: medium;
+
+    input {
+      padding: 4px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  }
+
+  select {
+    padding: 4px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+}
