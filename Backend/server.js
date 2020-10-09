@@ -4,7 +4,6 @@ var mongoose = require("mongoose");
 var db = require("./schema");
 var cors = require("cors");
 var bodyParser = require("body-parser");
-const { start } = require("repl");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -16,7 +15,6 @@ mongoose.connect("mongodb://localhost:27017/Table", {
 app.use(cors());
 
 app.get("/fetch", async (req, res) => {
-  // var size = {};
   startRow = req.query.startRow;
   endRow = req.query.endRow;
   console.log(">>>", startRow);

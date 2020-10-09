@@ -103,7 +103,7 @@ const Table = () => {
         axios
           .get("http://localhost:8081/fetch", { params: { startRow, endRow } })
           .then((res) => {
-            // console.log(">>>>", res.data);
+            console.log(">>>>", res.data);
             setData(res.data.result);
             // console.log(res.data.slice(startRow, endRow));
             setPageCount(Math.ceil(res.data.count / pageSize));
