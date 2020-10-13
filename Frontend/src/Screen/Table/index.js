@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState, useMemo, useCallback } from "react";
 import TableComponent from "./../../Component/Table";
 import axios from "axios";
-import "../../Component/Table/table.scss"
+import "../../Component/Table/table.scss";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -38,38 +38,28 @@ const Table = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Details",
-        columns: [
-          {
-            Header: "Name",
-            accessor: "Name",
-          },
-          {
-            Header: "Email",
-            accessor: "Email",
-          },
-          {
-            Header: "ZipCode",
-            accessor: "Zipcode",
-          },
-          {
-            Header: "Age",
-            accessor: "Age",
-          },
-        ],
+        Header: "Name",
+        accessor: "Name",
       },
       {
-        Header: "ContactInfo",
-        columns: [
-          {
-            Header: "MobileNum",
-            accessor: "contactInfo.Mob",
-          },
-          {
-            Header: "Address",
-            accessor: "contactInfo.Address",
-          },
-        ],
+        Header: "Email",
+        accessor: "Email",
+      },
+      {
+        Header: "PinCode",
+        accessor: "Zipcode",
+      },
+      {
+        Header: "Age",
+        accessor: "Age",
+      },
+      {
+        Header: "Contact Number",
+        accessor: "contactInfo.Mob",
+      },
+      {
+        Header: "Address",
+        accessor: "contactInfo.Address",
       },
     ],
     []
