@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useMemo, useCallback } from "react";
 import TableComponent from "./../../Component/Table";
-import axios from "axios";
 import "../../Component/Table/table.scss";
-import { getDetails, setLoading, setPageCount } from "../../redux/actions";
-import { compose } from "redux";
+import { getDetailsFetch, setLoading, setPageCount } from "../../redux/actions";
+import { get } from "../../api";
+import tableSaga from "../../redux/saga/table";
 const Table = () => {
   const columns = useMemo(
     () => [
@@ -59,15 +59,15 @@ const Table = () => {
         const endRow = startRow + pageSize;
         // console.log(startRow);
         // console.log(endRow);
-        axios
-          .get("http://localhost:8081/fetch", { params: { startRow, endRow } })
-          .then((res) => {
-            dispatch(getDetails(res.data.result));
-            dispatch(setPageCount(Math.ceil(res.data.count / pageSize)));
-          })
-          .catch((err) => {
-            console.log("error", err);
-          });
+        // get({ url: "fetch", params: { startRow, endRow } })
+        // .then((res) => {
+        // dispatch(getDetails(res.data.result));
+        dispatch(getDetailsFetch("fetch"));
+        // dispatch(setPageCount(Math.ceil(res.data.count / pageSize)));
+        // })
+        // .catch((err) => {
+        //   console.log("error", err);
+        // });
 
         dispatch(setLoading(false));
       }

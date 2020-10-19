@@ -36,6 +36,8 @@ const TableComponent = ({
     useSortBy,
     usePagination
   );
+
+  // WTF
   useEffect(() => fetchData({ pageIndex, pageSize }), [
     fetchData,
     pageIndex,
@@ -137,6 +139,8 @@ const TableComponent = ({
             setPageSize(Number(e.target.value));
           }}
         >
+          {// don't use hard code array
+          }
           {[10, 15, 20, 25, 30].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
