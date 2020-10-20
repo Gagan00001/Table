@@ -1,10 +1,18 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { get } from "../../api";
-import { GET_DETAILS, GET_DETAILS_FETCH } from "../actions";
+import {
+  getDetails,
+  GET_DETAILS,
+  GET_DETAILS_FETCH,
+  setPageCount,
+} from "../actions";
 
-function getApi() {
-  get()
-    .then((response) => response.json())
+function getApi({ url, params = {} }) {
+  return get({ url, params })
+    .then((response) => {
+      console.log({ data: response.data.result, count: response.data.count });
+      return { data: response.data.result, count: response.data.count };
+    })
     .catch((error) => {
       throw error;
     });
@@ -12,8 +20,17 @@ function getApi() {
 
 function* fetchdata(action) {
   console.log("Saga is running", action);
-  const data = yield call(getApi);
-  yield put({ type: GET_DETAILS, data });
+  try {
+    const { data, count } = yield call(getApi, {
+      url: action.data.url,
+      params: action.data.params,
+    });
+    console.log(data);
+    yield put(getDetails(data));
+    yield put(setPageCount(Math.ceil(count/data.length)));
+  } catch (e) {
+    yield put({});
+  }
 }
 
 function* tableSaga() {

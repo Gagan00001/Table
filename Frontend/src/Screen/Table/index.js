@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useMemo, useCallback } from "react";
 import TableComponent from "./../../Component/Table";
 import "../../Component/Table/table.scss";
-import { getDetailsFetch, setLoading, setPageCount } from "../../redux/actions";
-import { get } from "../../api";
-import tableSaga from "../../redux/saga/table";
+import { getDetailsFetch, setLoading } from "../../redux/actions";
 const Table = () => {
   const columns = useMemo(
     () => [
@@ -59,16 +57,9 @@ const Table = () => {
         const endRow = startRow + pageSize;
         // console.log(startRow);
         // console.log(endRow);
-        // get({ url: "fetch", params: { startRow, endRow } })
-        // .then((res) => {
-        // dispatch(getDetails(res.data.result));
-        dispatch(getDetailsFetch("fetch"));
-        // dispatch(setPageCount(Math.ceil(res.data.count / pageSize)));
-        // })
-        // .catch((err) => {
-        //   console.log("error", err);
-        // });
-
+        dispatch(
+          getDetailsFetch({ url: "/fetch", params: { startRow, endRow } })
+        );
         dispatch(setLoading(false));
       }
     }, 1000);

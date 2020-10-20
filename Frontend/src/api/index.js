@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: "http://localhost:8081/",
+  baseURL: "http://localhost:8081",
   mode: "cors",
   headers: {
     Accept: "application/json",
@@ -10,6 +10,7 @@ const server = axios.create({
 });
 export const get = (options) => {
   const { url, params = {} } = options || {};
+  console.log(url,params);
   const serverOptions = {
     url,
     method: "get",
