@@ -37,9 +37,11 @@ const Table = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const fetchIdRef = useRef(0);
-  const details = useSelector((state) => state.detailsReducer.details);
-  const loading = useSelector((state) => state.loadingReducer.state);
-  const pageCount = useSelector((state) => state.pageCountReducer.state);
+  const details = useSelector((state) => state.dataReducer.data);
+  const loading = useSelector((state) => state.loadingReducer.isLoading);
+  const pageCount = useSelector(
+    (state) => state.pageCountReducer.currentPageCount
+  );
   useMemo(() => {
     if (details && details.length) {
       setData(details);
@@ -60,6 +62,8 @@ const Table = () => {
         dispatch(
           getDetailsFetch({ url: "/fetch", params: { startRow, endRow } })
         );
+        // dispatch(setPageCount(Math.ceil(data.count / pageSize)));
+        console.log(">>>>>>>>>>>");
         dispatch(setLoading(false));
       }
     }, 1000);

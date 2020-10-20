@@ -7,12 +7,10 @@ export const getDetailsFetch = (data) => ({
   type: GET_DETAILS_FETCH,
   data,
 });
-
 export const setPageCount = (data) => ({
   type: PAGECOUNT,
   data,
 });
-
 export const getDetails = (data) => ({
   type: GET_DETAILS,
   data,

@@ -4,40 +4,40 @@ const initialState = [];
 const loading = false;
 const pageCountValue = 0;
 
-const pageCountReducer = (state = pageCountValue, action) => {
+const pageCountReducer = (currentPageCount = pageCountValue, action) => {
   switch (action.type) {
     case PAGECOUNT:
       return {
-        state: action.data,
+        currentPageCount: action.data,
       };
     default:
-      return state;
+      return currentPageCount;
   }
 };
 
-const detailsReducer = (state = initialState, action) => {
+const dataReducer = (data = initialState, action) => {
   switch (action.type) {
     case GET_DETAILS:
       return {
-        ...state,
-        details: action.data,
+        ...data,
+        data: action.data,
       };
     default:
-      return state;
+      return data;
   }
 };
-const loadingReducer = (state = loading, action) => {
+const loadingReducer = (isLoading = loading, action) => {
   switch (action.type) {
     case LOADING:
       return {
-        state: action.flag,
+        isLoading: action.flag,
       };
     default:
-      return state;
+      return isLoading;
   }
 };
 const rootReducer = combineReducers({
-  detailsReducer,
+  dataReducer,
   loadingReducer,
   pageCountReducer,
 });

@@ -37,15 +37,12 @@ const TableComponent = ({
     usePagination
   );
 
-  // WTF
-  useEffect(() => fetchData({ pageIndex, pageSize }), [
-    fetchData,
-    pageIndex,
-    pageSize,
-  ]);
+  useEffect(() => {
+    fetchData({ pageIndex, pageSize });
+  }, [fetchData, pageIndex, pageSize]);
 
   return (
-    <div className="TableContent">
+    <div className="table-content">
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -139,7 +136,8 @@ const TableComponent = ({
             setPageSize(Number(e.target.value));
           }}
         >
-          {// don't use hard code array
+          {
+            // don't use hard code array
           }
           {[10, 15, 20, 25, 30].map((pageSize) => (
             <option key={pageSize} value={pageSize}>

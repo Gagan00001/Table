@@ -33,11 +33,11 @@ app.get("/fetch", async (req, res) => {
     const count = await db.find({}).count();
     console.log("count", count);
     const result = await db.find({}, null, {
-      limit: Number(endRow),
       skip: Number(startRow),
+      limit: Number(endRow - startRow),
     });
     console.log("result", result);
-    res.send({count,result});
+    res.send({ count, result });
   } catch (error) {}
 });
 

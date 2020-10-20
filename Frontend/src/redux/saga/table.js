@@ -26,8 +26,9 @@ function* fetchdata(action) {
       params: action.data.params,
     });
     console.log(data);
+    if (data.length < 10) data.length = 10;
     yield put(getDetails(data));
-    yield put(setPageCount(Math.ceil(count/data.length)));
+    yield put(setPageCount(Math.ceil(count / data.length)));
   } catch (e) {
     yield put({});
   }
