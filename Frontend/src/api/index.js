@@ -10,7 +10,7 @@ const server = axios.create({
 });
 export const get = (options) => {
   const { url, params = {} } = options || {};
-  console.log(url,params);
+  // console.log(url,params);
   const serverOptions = {
     url,
     method: "get",

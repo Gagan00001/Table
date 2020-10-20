@@ -62,8 +62,6 @@ const Table = () => {
         dispatch(
           getDetailsFetch({ url: "/fetch", params: { startRow, endRow } })
         );
-        // dispatch(setPageCount(Math.ceil(data.count / pageSize)));
-        console.log(">>>>>>>>>>>");
         dispatch(setLoading(false));
       }
     }, 1000);
